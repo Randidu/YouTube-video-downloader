@@ -1,0 +1,4 @@
+2026-01-25 19:21:25,818 [INFO] Application Base Directory: C:\Users\randi\OneDrive\Desktop\web_application_video_downloder
+2026-01-25 19:21:25,820 [INFO] Running in DESKTOP mode. Downloads dir: C:\Users\randi\Downloads
+2026-01-25 19:21:55,209 [WARNING] FFmpeg not found. Some features may be limited.
+2026-01-25 19:35:16,105 [ERROR] Error info: [0;31mERROR:[0m [youtube] x5XIIV57LdQ: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
