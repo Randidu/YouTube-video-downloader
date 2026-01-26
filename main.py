@@ -136,8 +136,28 @@ async def get_video_info(video: VideoURL):
         }
             
     except Exception as e:
-        logger.error(f"Error info: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        logger.warning(f"yt-dlp info fetch failed: {e}. Trying pytubefix fallback...")
+        try:
+            def get_info_pytubefix():
+                # 'po_token' or other robust args could be added here if needed in future
+                yt = YouTube(url_str, use_oauth=False, allow_oauth_cache=False) 
+                return {
+                    "title": yt.title,
+                    "thumbnail": yt.thumbnail_url,
+                    "duration": yt.length,
+                    "uploader": yt.author,
+                    "view_count": yt.views
+                }
+            
+            info = await asyncio.get_event_loop().run_in_executor(executor, get_info_pytubefix)
+            return {
+                "success": True,
+                "data": info
+            }
+        except Exception as e2:
+            logger.error(f"Both methods failed. yt-dlp: {e}, pytubefix: {e2}")
+            # Raise the original yt-dlp error as it's usually more descriptive regarding bot detection
+            raise HTTPException(status_code=400, detail=f"Details fetch failed: {str(e)}")
 
 def cleanup_file(path: str):
     try:
