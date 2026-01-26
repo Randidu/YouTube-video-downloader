@@ -652,7 +652,7 @@
                 <a href="#contact">Contact</a>
             </div>
             <p class="copyright">
-                &copy; 2024 AntyGrab. All rights reserved. Made with <i class="bi bi-heart-fill text-danger"></i>
+                &copy; 2026 InfinityGrab. All rights reserved. Made with <i class="bi bi-heart-fill text-danger">RD</i>
             </p>
         </div>
     </footer>
@@ -668,8 +668,8 @@
         // 2. Otherwise (Production on Render, or running locally via Python on port 8000), use the current origin.
         const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const isBackendPort = window.location.port === '8000';
-        const API_URL = (isLocalDev && !isBackendPort) 
-            ? 'http://localhost:8000' 
+        const API_URL = (isLocalDev && !isBackendPort)
+            ? 'http://localhost:8000'
             : window.location.origin;
 
         // DOM Elements
