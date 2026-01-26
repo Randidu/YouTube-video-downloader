@@ -105,7 +105,12 @@ async def get_video_info(video: VideoURL):
     
     # helper for yt-dlp info
     def get_info_ytdlp():
-        ydl_opts = {'quiet': True, 'no_warnings': True, 'extract_flat': False}
+        ydl_opts = {
+            'quiet': True, 
+            'no_warnings': True, 
+            'extract_flat': False,
+            'cookiesfrombrowser': ('chrome',),
+        }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             return ydl.extract_info(url_str, download=False)
 
@@ -223,7 +228,8 @@ async def download_link_get(url: str, background_tasks: BackgroundTasks, format:
             ydl_opts = {
                 'outtmpl': str(DOWNLOADS_DIR / f'{download_id}.%(ext)s'),
                 'quiet': False,
-                'ffmpeg_location': ffmpeg_exe if ffmpeg_exe else None
+                'ffmpeg_location': ffmpeg_exe if ffmpeg_exe else None,
+                'cookiesfrombrowser': ('chrome',),
             }
             if format == "mp3":
                 if ffmpeg_exe:
@@ -401,7 +407,8 @@ async def download_video(request: DownloadRequest):
             ydl_opts = {
                 'outtmpl': str(DOWNLOADS_DIR / f'{download_id}.%(ext)s'),
                 'quiet': False,
-                'ffmpeg_location': ffmpeg_exe if ffmpeg_exe else None
+                'ffmpeg_location': ffmpeg_exe if ffmpeg_exe else None,
+                'cookiesfrombrowser': ('chrome',),
             }
             
             # Simple configuration for robustness
