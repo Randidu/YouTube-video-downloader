@@ -109,8 +109,15 @@ async def get_video_info(video: VideoURL):
             'quiet': True, 
             'no_warnings': True, 
             'extract_flat': False,
-            'cookiesfrombrowser': ('chrome',),
         }
+        # Desktop: Use Chrome cookies
+        if not IS_SERVER:
+            ydl_opts['cookiesfrombrowser'] = ('chrome',)
+        
+        # Server: Check for cookies.txt
+        cookie_file = BASE_DIR / "cookies.txt"
+        if cookie_file.exists():
+            ydl_opts['cookiefile'] = str(cookie_file)
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             return ydl.extract_info(url_str, download=False)
 
@@ -229,8 +236,15 @@ async def download_link_get(url: str, background_tasks: BackgroundTasks, format:
                 'outtmpl': str(DOWNLOADS_DIR / f'{download_id}.%(ext)s'),
                 'quiet': False,
                 'ffmpeg_location': ffmpeg_exe if ffmpeg_exe else None,
-                'cookiesfrombrowser': ('chrome',),
             }
+            # Desktop: Use Chrome cookies
+            if not IS_SERVER:
+                ydl_opts['cookiesfrombrowser'] = ('chrome',)
+            
+            # Server: Check for cookies.txt
+            cookie_file = BASE_DIR / "cookies.txt"
+            if cookie_file.exists():
+                ydl_opts['cookiefile'] = str(cookie_file)
             if format == "mp3":
                 if ffmpeg_exe:
                     ydl_opts['format'] = 'bestaudio/best'
@@ -408,8 +422,15 @@ async def download_video(request: DownloadRequest):
                 'outtmpl': str(DOWNLOADS_DIR / f'{download_id}.%(ext)s'),
                 'quiet': False,
                 'ffmpeg_location': ffmpeg_exe if ffmpeg_exe else None,
-                'cookiesfrombrowser': ('chrome',),
             }
+            # Desktop: Use Chrome cookies
+            if not IS_SERVER:
+                ydl_opts['cookiesfrombrowser'] = ('chrome',)
+            
+            # Server: Check for cookies.txt
+            cookie_file = BASE_DIR / "cookies.txt"
+            if cookie_file.exists():
+                ydl_opts['cookiefile'] = str(cookie_file)
             
             # Simple configuration for robustness
             if request.format == "mp3":
